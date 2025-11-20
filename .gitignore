@@ -4,5 +4,5 @@ __pycache__/
 .bash_history.bak
 .bash_history.tmp
 *.txt
-.venv/
+venv/
 env/

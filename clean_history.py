@@ -1,11 +1,11 @@
+import logging
 import shutil
 import sys
-import logging
 from pathlib import Path
 from typing import List
 
 # Configuração de logs para visibilidade do processo
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -28,7 +28,7 @@ class BashHistoryCleaner:
             raise FileNotFoundError(
                 f"Arquivo não encontrado: {self.file_path}")
 
-        backup_path = self.file_path.with_suffix('.bak')
+        backup_path = self.file_path.with_suffix(".bak")
         shutil.copy2(self.file_path, backup_path)
         logger.info(f"Backup criado em: {backup_path}")
 
@@ -69,20 +69,21 @@ class BashHistoryCleaner:
             self.create_backup()
 
             # Leitura com tratamento de erros de encoding (comum em terminais)
-            with open(self.file_path, 'r', encoding='utf-8',
-                      errors='replace') as f:
+            with open(
+                      self.file_path, "r", encoding="utf-8",
+                      errors="replace") as f:
                 lines = f.readlines()
 
             original_count = len(lines)
             unique_lines = self.deduplicate_lines(lines)
             final_count = len(unique_lines)
 
-            '''
+            """
             Escrita Atômica: Escreve em temp e renomeia
             (evita corrupção se cair energia)
-            '''
-            temp_path = self.file_path.with_suffix('.tmp')
-            with open(temp_path, 'w', encoding='utf-8') as f:
+            """
+            temp_path = self.file_path.with_suffix(".tmp")
+            with open(temp_path, "w", encoding="utf-8") as f:
                 f.writelines(unique_lines)
 
             # Substitui o arquivo original
@@ -91,7 +92,7 @@ class BashHistoryCleaner:
             logger.info("Limpeza concluída com sucesso.")
             logger.info(
                 f"Linhas Antes: {original_count} |"
-                " Linhas Depois: {final_count}")
+                f" Linhas Depois: {final_count}")
             logger.info(
                 f"Removidas: {original_count - final_count} duplicatas.")
 
@@ -107,17 +108,13 @@ def run_tests():
 
     # Caso 1: Duplicatas consecutivas e não consecutivas
     input_data = [
-        "git status\n",      # Antigo (deve sumir)
+        "git status\n",  # Antigo (deve sumir)
         "ls -la\n",
-        "git status\n",      # Recente (deve ficar)
+        "git status\n",  # Recente (deve ficar)
         "make fmt\n",
-        "make fmt\n"         # Recente (deve ficar)
+        "make fmt\n",  # Recente (deve ficar)
     ]
-    expected = [
-        "ls -la\n",
-        "git status\n",
-        "make fmt\n"
-    ]
+    expected = ["ls -la\n", "git status\n", "make fmt\n"]
 
     result = cleaner.deduplicate_lines(input_data)
     assert result == expected, f"Falha no teste de lógica. Recebido: {result}"
