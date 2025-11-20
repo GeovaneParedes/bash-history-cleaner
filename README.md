@@ -1,6 +1,6 @@
 # Bash History Cleaner / Limpador de Histórico Bash
 
-![CI Status](https://github.com/GeovaneParedes/bash-history-cleaner/actions/workflows/ci.yml/badge.svg)
+![CI Status](https://github.com/GeovaneParedes/bash-history-cleaner/actions/workflows/ci.yml/badge.svg?branch=main)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
