@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.bash_history.bak
+.bash_history.tmp
+*.txt
+.venv/
+env/
