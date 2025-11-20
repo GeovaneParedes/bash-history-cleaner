@@ -1,10 +1,22 @@
 [tool.black]
-line-length = 88
-target-version = ['py310']
+line-length = 79
+target-version = ["py36", "py37"]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.venv 
+  | _build
+  | build
+  | dist
+  | migrations
+)/
+''' 
 
 [tool.isort]
 profile = "black"
-line_length = 88
+src_paths = ["clean_history.py"]
+multi_line_output = 3 # VHI
 
 [tool.pytest.ini_options]
 minversion = "7.0"

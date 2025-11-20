@@ -26,7 +26,8 @@ class BashHistoryCleaner:
         """
         if not self.file_path.exists():
             raise FileNotFoundError(
-                f"Arquivo não encontrado: {self.file_path}")
+                f"Arquivo não encontrado: {self.file_path}"
+            )
 
         backup_path = self.file_path.with_suffix(".bak")
         shutil.copy2(self.file_path, backup_path)
@@ -62,7 +63,8 @@ class BashHistoryCleaner:
         try:
             if not self.file_path.exists():
                 logger.warning(
-                    f"Arquivo {self.file_path} não existe. Abortando.")
+                    f"Arquivo {self.file_path} não existe. Abortando."
+                )
                 return
 
             logger.info(f"Processando: {self.file_path}")
@@ -70,8 +72,8 @@ class BashHistoryCleaner:
 
             # Leitura com tratamento de erros de encoding (comum em terminais)
             with open(
-                      self.file_path, "r", encoding="utf-8",
-                      errors="replace") as f:
+                self.file_path, "r", encoding="utf-8", errors="replace"
+            ) as f:
                 lines = f.readlines()
 
             original_count = len(lines)
@@ -92,9 +94,11 @@ class BashHistoryCleaner:
             logger.info("Limpeza concluída com sucesso.")
             logger.info(
                 f"Linhas Antes: {original_count} |"
-                f" Linhas Depois: {final_count}")
+                f" Linhas Depois: {final_count}"
+            )
             logger.info(
-                f"Removidas: {original_count - final_count} duplicatas.")
+                f"Removidas: {original_count - final_count} duplicatas."
+            )
 
         except Exception as e:
             logger.error(f"Erro crítico durante a execução: {e}")
